@@ -1779,6 +1779,31 @@ async function loadSheet(sheetName) {
   }
 }
 
+// ── REFRESH DROPDOWN TAHUN (hanya tampil tahun yg ada di data & <= tahun ini) ──
+function refreshThnDropdown() {
+  const thnEl = document.getElementById('l-thn');
+  if (!thnEl) return;
+  const currentYear = new Date().getFullYear();
+  const all = [...(_spDataApi||[]), ...(_spDataChem||[])];
+  const yearsFound = new Set();
+  all.forEach(item => {
+    Object.keys(item).forEach(k => {
+      const m = k.match(/\b(20\d{2})\b/);
+      if (m) yearsFound.add(parseInt(m[1]));
+    });
+  });
+  const validYears = [...yearsFound].filter(y => y <= currentYear).sort((a,b) => b - a);
+  const yearList = validYears.length > 0 ? validYears : [currentYear];
+  const prevVal = parseInt(thnEl.value) || currentYear;
+  thnEl.innerHTML = '';
+  yearList.forEach(y => {
+    const op = document.createElement('option');
+    op.value = y; op.textContent = y;
+    if (y === prevVal || (prevVal > currentYear && y === currentYear)) op.selected = true;
+    thnEl.appendChild(op);
+  });
+}
+
 async function fetchData() {
   // Flash overlay saat refresh
   let flash = document.getElementById('refresh-flash');
@@ -1835,6 +1860,8 @@ if (lapBln) lapBln.value = String(defaultM);
   updateDashboard();
   renderQuickNav();
   renderBarChart();
+  // Refresh dropdown tahun berdasarkan data aktual yang baru dimuat
+  refreshThnDropdown();
   renderLaporan();
   renderNotif();
   renderPriceDonut();
@@ -3818,15 +3845,28 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (blnEl) blnEl.value = now.getMonth();
   if (thnEl) {
     thnEl.innerHTML = '';
-    // Dynamically populate: tahun sekarang + 3 tahun ke belakang (otomatis bertambah setiap ganti tahun)
+    // Hanya tampilkan tahun yang sudah/sedang berjalan berdasarkan data aktual.
+    // Cari tahun awal dari kolom header "Pemakaian <Bulan> <Tahun>" atau fallback ke currentYear.
     const currentYear = now.getFullYear();
-    const startYear = currentYear - 3;
-    for (let y = currentYear; y >= startYear; y--) {
+    const all = [...(_spDataApi||[]), ...(_spDataChem||[])];
+    const yearsFound = new Set();
+    // Cari pola tahun dari key kolom data
+    all.forEach(item => {
+      Object.keys(item).forEach(k => {
+        const m = k.match(/\b(20\d{2})\b/);
+        if (m) yearsFound.add(parseInt(m[1]));
+      });
+    });
+    // Ambil tahun yang <= currentYear saja (tidak tampilkan masa depan)
+    const validYears = [...yearsFound].filter(y => y <= currentYear).sort((a,b) => b - a);
+    // Kalau tidak ada data tahun dari kolom, minimal tampilkan tahun sekarang saja
+    const yearList = validYears.length > 0 ? validYears : [currentYear];
+    yearList.forEach(y => {
       const op = document.createElement('option');
       op.value = y; op.textContent = y;
       if (y === currentYear) op.selected = true;
       thnEl.appendChild(op);
-    }
+    });
   }
   // Set dropdown bulan ke bulan terakhir yang ada data (akan di-update setelah fetchData)
   const dashBln = document.getElementById('dash-bln');
@@ -4459,4 +4499,4 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailM
 
 <div id="toast-wrap"></div>
 </body>
-</html>       
+</html>
