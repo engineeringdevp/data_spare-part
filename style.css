@@ -1,0 +1,215 @@
+/* ============================================================
+   ROOT & RESET
+============================================================ */
+:root {
+    --primary-dark: #0f2347;
+    --primary-light: #2a5298;
+    --success: #10b981;
+    --danger: #ef4444;
+    --bg: #f0f4fb;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --radius: 12px;
+    --shadow: 0 4px 20px rgba(26,58,110,0.10);
+    --shadow-lg: 0 8px 32px rgba(26,58,110,0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+header h1 {
+    font-size: 1.4rem;
+}
+
+/* ============================================================
+   SEARCH
+============================================================ */
+.search-container {
+    padding: 20px;
+}
+
+#search {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 14px;
+}
+
+/* ============================================================
+   LOADING SCREEN
+============================================================ */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: white;
+}
+
+.spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(255,255,255,0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   TABLE (DESKTOP)
+============================================================ */
+.table-wrapper {
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+thead {
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary-light));
+}
+
+th {
+    padding: 14px;
+    color: white;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f3f7ff;
+}
+
+.status-tersedia {
+    color: var(--success);
+    font-weight: bold;
+}
+
+.status-kosong {
+    color: var(--danger);
+    font-weight: bold;
+}
+
+/* ============================================================
+   CARD (MOBILE)
+============================================================ */
+.card-container {
+    display: none;
+    padding: 15px;
+}
+
+.card {
+    background: var(--surface);
+    padding: 15px;
+    border-radius: var(--radius);
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.card p {
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media (max-width: 768px) {
+
+    .table-wrapper {
+        display: none !important;
+    }
+
+    .card-container {
+        display: block !important;
+    }
+}
+
+/* ============================================================
+   PAGINATION (DIMATIKAN)
+============================================================ */
+.pagination {
+    display: none !important;
+}
+/* ===== FORCE NO SIDE SCROLL ===== */
+
+html, body {
+    overflow-x: hidden !important;
+}
+
+.table-wrapper {
+    overflow-x: hidden !important;
+}
+
+table {
+    width: 100% !important;
+    min-width: 100% !important;
+    table-layout: fixed;
+}
+
+th, td {
+    word-wrap: break-word;
+    white-space: normal;
+}
+.sheet-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+}
+
+.sheet {
+    min-width: 100%;
+    scroll-snap-align: start;
+}
