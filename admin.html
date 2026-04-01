@@ -753,7 +753,7 @@ thead th:last-child{background:var(--bg3)!important;position:sticky;right:0;z-in
     <div class="ld-ring"></div>
     <div class="ld-ring2"></div>
     <div class="ld-ring3"></div>
-    <div class="ld-logo"><img src="logo engineering.jpeg" alt="Logo"></div>
+    <div class="ld-logo"><img src="logoengineering.jpeg" alt="Logo"></div>
   </div>
   <div class="ld-brand-row">
     <div class="ld-title">Engineering</div>
@@ -769,7 +769,7 @@ thead th:last-child{background:var(--bg3)!important;position:sticky;right:0;z-in
 </div>
 <div class="app">
 <aside class="sidebar">
-  <div class="sb-brand" onclick="openLogoModal()" title="Lihat Detail Perusahaan"><div class="sb-brand-inner"><img src="logo engineering.jpeg" style="width:100%;height:100%;object-fit:contain;display:block"></div></div>
+  <div class="sb-brand" onclick="openLogoModal()" title="Lihat Detail Perusahaan"><div class="sb-brand-inner"><img src="logoengineering.jpeg" style="width:100%;height:100%;object-fit:contain;display:block"></div></div>
   <div class="nav-ic act" data-tip="Dashboard" onclick="nav('dashboard',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
   </div>
@@ -3818,9 +3818,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (blnEl) blnEl.value = now.getMonth();
   if (thnEl) {
     thnEl.innerHTML = '';
-    // Dynamically populate: current year + 2 previous years
+    // Dynamically populate: tahun sekarang + 3 tahun ke belakang (otomatis bertambah setiap ganti tahun)
     const currentYear = now.getFullYear();
-    for (let y = currentYear; y >= currentYear - 2; y--) {
+    const startYear = currentYear - 3;
+    for (let y = currentYear; y >= startYear; y--) {
       const op = document.createElement('option');
       op.value = y; op.textContent = y;
       if (y === currentYear) op.selected = true;
@@ -4075,7 +4076,7 @@ function openLogoModal() {
   wrap.innerHTML = `
     <div class="logo-modal">
       <div class="logo-modal-close" onclick="closeLogoModal()">✕</div>
-      <div class="logo-modal-img-wrap"><div class="logo-modal-img-card"><img class="logo-modal-img" src="logo engineering.jpeg" alt="Logo PT. Aneka Boga Citra"></div></div>
+      <div class="logo-modal-img-wrap"><div class="logo-modal-img-card"><img class="logo-modal-img" src="logoengineering.jpeg" alt="Logo PT. Aneka Boga Citra"></div></div>
       <div class="logo-modal-name">PT. Aneka Boga Citra</div>
       <div class="logo-modal-sub">Engineering Department</div>
       <div class="logo-modal-divider"></div>
@@ -4458,4 +4459,4 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailM
 
 <div id="toast-wrap"></div>
 </body>
-</html>
+</html>       
